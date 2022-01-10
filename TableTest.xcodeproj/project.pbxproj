@@ -16,6 +16,9 @@
 		FF901265278BBF2F0039025F /* TableTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF901264278BBF2F0039025F /* TableTestTests.swift */; };
 		FF90126F278BBF2F0039025F /* TableTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90126E278BBF2F0039025F /* TableTestUITests.swift */; };
 		FF901271278BBF2F0039025F /* TableTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF901270278BBF2F0039025F /* TableTestUITestsLaunchTests.swift */; };
+		FF901281278BE3410039025F /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF901280278BE3410039025F /* Animal.swift */; };
+		FF901283278BF9DB0039025F /* animals.json in Resources */ = {isa = PBXBuildFile; fileRef = FF901282278BF6350039025F /* animals.json */; };
+		FF901286278BFF500039025F /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FF901285278BFF500039025F /* sound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		FF90126A278BBF2F0039025F /* TableTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF90126E278BBF2F0039025F /* TableTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTestUITests.swift; sourceTree = "<group>"; };
 		FF901270278BBF2F0039025F /* TableTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FF901280278BE3410039025F /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
+		FF901282278BF6350039025F /* animals.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = animals.json; sourceTree = "<group>"; };
+		FF901285278BFF500039025F /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +105,15 @@
 		FF90124C278BBF2D0039025F /* TableTest */ = {
 			isa = PBXGroup;
 			children = (
+				FF901284278BFE900039025F /* Sound */,
+				FF90127F278BBFA60039025F /* Model */,
+				FF90127E278BBF9D0039025F /* Controller */,
+				FF90127D278BBF520039025F /* View */,
 				FF90124D278BBF2D0039025F /* AppDelegate.swift */,
 				FF90124F278BBF2D0039025F /* SceneDelegate.swift */,
-				FF901251278BBF2D0039025F /* ViewController.swift */,
-				FF901253278BBF2D0039025F /* Main.storyboard */,
 				FF901256278BBF2E0039025F /* Assets.xcassets */,
-				FF901258278BBF2E0039025F /* LaunchScreen.storyboard */,
 				FF90125B278BBF2E0039025F /* Info.plist */,
+				FF901282278BF6350039025F /* animals.json */,
 			);
 			path = TableTest;
 			sourceTree = "<group>";
@@ -125,6 +133,39 @@
 				FF901270278BBF2F0039025F /* TableTestUITestsLaunchTests.swift */,
 			);
 			path = TableTestUITests;
+			sourceTree = "<group>";
+		};
+		FF90127D278BBF520039025F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF901253278BBF2D0039025F /* Main.storyboard */,
+				FF901258278BBF2E0039025F /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FF90127E278BBF9D0039025F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FF901251278BBF2D0039025F /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FF90127F278BBFA60039025F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FF901280278BE3410039025F /* Animal.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FF901284278BFE900039025F /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				FF901285278BFF500039025F /* sound.mp3 */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,8 +272,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF901283278BF9DB0039025F /* animals.json in Resources */,
 				FF90125A278BBF2E0039025F /* LaunchScreen.storyboard in Resources */,
 				FF901257278BBF2E0039025F /* Assets.xcassets in Resources */,
+				FF901286278BFF500039025F /* sound.mp3 in Resources */,
 				FF901255278BBF2D0039025F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF901252278BBF2D0039025F /* ViewController.swift in Sources */,
+				FF901281278BE3410039025F /* Animal.swift in Sources */,
 				FF90124E278BBF2D0039025F /* AppDelegate.swift in Sources */,
 				FF901250278BBF2D0039025F /* SceneDelegate.swift in Sources */,
 			);

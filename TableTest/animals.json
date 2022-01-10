@@ -1,0 +1,21 @@
+{
+   "animals":[
+      {
+         "name":"Horse"
+      },
+      {
+         "name":"Cow"
+      },
+      {
+         "name":"Camel"
+      },
+      {
+         "name":"Sheep"
+      },
+      {
+         "name":"Goat",
+         "description":"Kambing"
+      }
+   ]
+}
+
