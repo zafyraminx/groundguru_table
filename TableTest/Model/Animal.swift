@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct Animal {
+struct Animals: Codable {
+    var animals:[Animal]
+}
+
+struct Animal: Codable {
     var name:String
     var description:String? = nil
 }

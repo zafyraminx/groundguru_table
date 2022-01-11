@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import JGProgressHUD
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -25,6 +26,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let dog: String? = nil
     
+    let hud = JGProgressHUD()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,8 +37,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableview.dataSource = self
         
         self.perform(#selector(updateProgress), with: nil, afterDelay: 0.5)
-        loadJsonFile()
         loadSoundFile()
+        print("Didload")
+        
+        
+        hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
+        progressView.isHidden = true
+//        hud.dismiss(afterDelay: 3.0)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("didAppear")
     }
     
     @objc func updateProgress() {
@@ -48,15 +61,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             //            tableview.reloadData()
         } else {
             print("progress else")
-            animals.append(Animal(name: "Horse"))
-            animals.append(Animal(name: "Cow"))
-            animals.append(Animal(name: "Camel"))
-            animals.append(Animal(name: "Sheep"))
-            animals.append(Animal(name: "Goat",description: "Kambing"))
-            //            animals.append(dog)
-            tableview.reloadData()
-            progressView.isHidden = true
+//            animals.append(Animal(name: "Horse"))
+//            animals.append(Animal(name: "Cow"))
+//            animals.append(Animal(name: "Camel"))
+//            animals.append(Animal(name: "Sheep"))
+//            animals.append(Animal(name: "Goat",description: "Kambing"))
+//            //            animals.append(dog)
+//            tableview.reloadData()
+            loadJsonFile()
             
+            hud.dismiss(animated: false)
             audioPlayer.stop()
         }
     }
@@ -70,22 +84,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let cell:UITableViewCell = self.tableview.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell? ?? UITableViewCell()
         
-        //        // set the text from the data model
         if let display = self.animals[indexPath.row] {
+            //Cell Text
             cell.textLabel?.text = "\(display.name) 🔴 - \(display.description ?? "")"
+            //Cell Image
+            cell.imageView?.image = UIImage(named: display.name.lowercased())
         } else {
             cell.textLabel?.text = "Default"
         }
-        
-        //        do {
-        //            let display = try self.animals[indexPath.row]
-        //            cell.textLabel?.text = display
-        //        } catch {
-        //           cell.textLabel?.text = "Default"
-        //        }
-        
         print("display cell 🔴🔴🔴🔴🔴🔴🔴🔴")
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Click \(indexPath.row)")
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        if let display = self.animals[indexPath.row] {
+            let alert = UIAlertController(title: display.name, message: display.description, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { _ in
+                self.performSegue(withIdentifier: "list_details", sender: display)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func loadJsonFile() {
@@ -94,18 +116,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 print("data \(data)")
-                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
-                print("jsonResult \(jsonResult)")
-                
-                if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
-                    // do stuff
-                    if let array = jsonResult["animals"] as? NSArray { //[Animal?]
-                        let animal = array[0] as! Dictionary<String, AnyObject>
-                        print("json animal \(animal)")
-                    }
-                } else {
-                    print("error dictionary")
+                let decoder = JSONDecoder()
+                if let animalData = try? decoder.decode(Animals.self, from: data) {
+                    print("animalData \(animalData)")
+                    self.animals = animalData.animals
+                    tableview.reloadData()
                 }
+                
+//                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+//                print("jsonResult \(jsonResult)")
+//                if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
+//                    // do stuff
+//                    if let array = jsonResult["animals"] as? NSArray { //[Animal?]
+//                        let animal = array[0] as! Dictionary<String, AnyObject>
+//                        print("json animal \(animal)")
+//                    }
+//                } else {
+//                    print("error dictionary")
+//                }
             } catch {
                 // handle error
                 print("error")
@@ -126,5 +154,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             print("file not found")
         }
+    }
+}
+
+extension ViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //ViewController with Navigation Controller
+        if let navigationController = segue.destination as? UINavigationController {
+            let childViewController = navigationController.topViewController as? DetailsViewController
+            childViewController?.segueData = sender as? Animal
+        }
+        
+        //Direct ViewController
+//        let destinationVC = segue.destination as! DetailsViewController
+//        destinationVC.segueData = animals[0]
     }
 }
